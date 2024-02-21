@@ -79,21 +79,11 @@ class BinaryTree {
             for (let j = 0; j < validMoves.length; j++) {
                 newNode.nextNode = this.buildTree(validMoves[j], destination)
             }
-            // newNode.move1 = this.buildTree(validMoves[0], destination)
-            // newNode.move2 = this.buildTree(validMoves[1], destination)
-            // newNode.move3 = this.buildTree(validMoves[2], destination)
-            // newNode.move4 = this.buildTree(validMoves[3], destination)
-            // newNode.move5 = this.buildTree(validMoves[4], destination)
-            // newNode.move6 = this.buildTree(validMoves[5], destination)
-            // newNode.move7 = this.buildTree(validMoves[6], destination)
-            // newNode.move8 = this.buildTree(validMoves[7], destination)
         }
     }
 }
 
-// function knightMoves(startingCoordinate, destinationCoordinate) {
-//     const newTree = new BinaryTree(startingCoordinate, destinationCoordinate)
-// }
-// knightMoves([3,3],[4,5])
-
-const newTree = new BinaryTree([3,3],[5,3])
+function knightMoves(startingCoordinate, destinationCoordinate) {
+    const newTree = new BinaryTree(startingCoordinate, destinationCoordinate)
+}
+knightMoves([3,3],[4,5])
