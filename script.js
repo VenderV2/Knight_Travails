@@ -35,11 +35,16 @@ class Logic {
         for (let i = 0; i < newCoord.length; i++) {
             const indexOfArr = newCoord[i]
             if (indexOfArr[0] <= 8 && indexOfArr[1] <= 8) {
-                console.log('true ' + indexOfArr)
-                return indexOfArr
-            }
-            else {
-                console.log('false ' + indexOfArr)
+                visitedCoordinates.forEach(element => {
+                    if (JSON.stringify(element) === JSON.stringify(indexOfArr)){
+                        return
+                    }
+                    else {
+                        console.log('Not visited before ' + indexOfArr)
+                        return indexOfArr;
+                    }
+                });
+
             }
         }
         // return newCoord;
@@ -56,20 +61,21 @@ class BinaryTree {
         // console.log('visited coords: ' + visitedCoordinates)
     //First check if this move is valid, if not then return. If true then proceed to creating new node and checking for destination
 
-            const newNode = new Node(currentCoordinate)
-            visitedCoordinates.push(newNode.coordinate)
-            const validMoves = Logic.getMoveList(currentCoordinate)
-            console.log(validMoves)
-            //base case is when there are 0 valid moves that have been unvisited or destination is found
-    
-            if (validMoves == destination) {
-                console.log('Destination found')
-                return;
-            }
-            else {
-                newNode.move1 = this.buildTree(validMoves, destination)
-                return newNode;
-            }
+        const newNode = new Node(currentCoordinate)
+        visitedCoordinates.push(newNode.coordinate)
+        const validMoves = Logic.getMoveList(currentCoordinate)
+        console.log(validMoves)
+        console.log(visitedCoordinates[100])
+        //base case is when there are 0 valid moves that have been unvisited or destination is found
+
+        if (validMoves == destination) {
+            console.log('Destination found')
+            return;
+        }
+        else {
+            newNode.move1 = this.buildTree(validMoves, destination)
+            return newNode;
+        }
     }
 }
 
