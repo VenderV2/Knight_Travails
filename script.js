@@ -36,28 +36,13 @@ class Logic {
             const indexOfArr = newCoord[i]
             if (indexOfArr[0] <= 8 && indexOfArr[1] <= 8) {
                 console.log('true ' + indexOfArr)
+                return indexOfArr
             }
             else {
                 console.log('false ' + indexOfArr)
             }
         }
-        return newCoord;
-    }
-    static checkIfMoveIsValid(currentCoordinate) {
-        console.log('current coord is ' + currentCoordinate)
-        console.log()
-        if (visitedCoordinates.includes(currentCoordinate) == true) {
-            return false;
-        }
-        else if (currentCoordinate.includes('-') == true) {
-            return false;
-        }
-        else if (currentCoordinate[0] > 8 || currentCoordinate[1] > 8) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        // return newCoord;
     }
 }
 
@@ -70,35 +55,21 @@ class BinaryTree {
     buildTree(currentCoordinate, destination) {
         // console.log('visited coords: ' + visitedCoordinates)
     //First check if this move is valid, if not then return. If true then proceed to creating new node and checking for destination
-        if (Logic.checkIfMoveIsValid(currentCoordinate) === true) {
+
             const newNode = new Node(currentCoordinate)
             visitedCoordinates.push(newNode.coordinate)
             const validMoves = Logic.getMoveList(currentCoordinate)
             console.log(validMoves)
             //base case is when there are 0 valid moves that have been unvisited or destination is found
     
-            if (validMoves.includes(destination)) {
+            if (validMoves == destination) {
                 console.log('Destination found')
                 return;
             }
             else {
-                newNode.move1 = this.buildTree(validMoves[0], destination)
-                newNode.move2 = this.buildTree(validMoves[1], destination) 
-                newNode.move3 = this.buildTree(validMoves[2], destination) 
-                newNode.move4 = this.buildTree(validMoves[3], destination) 
-                newNode.move5 = this.buildTree(validMoves[4], destination) 
-                newNode.move6 = this.buildTree(validMoves[5], destination) 
-                newNode.move7 = this.buildTree(validMoves[6], destination) 
-                newNode.move8 = this.buildTree(validMoves[7], destination) 
+                newNode.move1 = this.buildTree(validMoves, destination)
                 return newNode;
             }
-
-            
-        }    
-        else {
-            return;
-        }
-        
     }
 }
 
