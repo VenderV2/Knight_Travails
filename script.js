@@ -40,7 +40,6 @@ class Logic {
             if (indexOfArr[0] <= 8 && indexOfArr[1] <= 8 && indexOfArr[0] >= 1 && indexOfArr[1] >= 1) {
                 for (let k = 0; k < visitedCoordinates.length; k++) {
                     if (JSON.stringify(visitedCoordinates[k]) === JSON.stringify(indexOfArr)){
-                        
                     }
                     else {
                         console.log('Not visited before ' + indexOfArr)
@@ -49,7 +48,6 @@ class Logic {
                 }
             }
         }
-        // return newCoord;
     }
 }
 
@@ -57,28 +55,26 @@ class BinaryTree {
     constructor(startingCoordinate, destinationCoordinate) {
         this.root = this.buildTree(startingCoordinate, destinationCoordinate);
         let destinatonFound = false;
-        // let visitedCoordinates = [];
     }
     buildTree(currentCoordinate, destination) {
-        // console.log('visited coords: ' + visitedCoordinates)
-    //First check if this move is valid, if not then return. If true then proceed to creating new node and checking for destination
-
         const newNode = new Node(currentCoordinate)
         visitedCoordinates.push(newNode.coordinate)
         const validMoves = Logic.getMoveList(currentCoordinate)
         //base case is when there are 0 valid moves that have been unvisited or destination is found
         if (JSON.stringify(validMoves) === JSON.stringify(destination)) {
             console.log('Destination found')
+            newNode.nextNode = new Node(validMoves)
             return newNode;
         }
         else {
             newNode.nextNode = this.buildTree(validMoves, destination)
-            
         }
     }
 }
 
-function knightMoves(startingCoordinate, destinationCoordinate) {
-    const newTree = new BinaryTree(startingCoordinate, destinationCoordinate)
-}
-knightMoves([3,3],[4,5])
+// function knightMoves(startingCoordinate, destinationCoordinate) {
+//     const newTree = new BinaryTree(startingCoordinate, destinationCoordinate)
+// }
+// knightMoves([3,3],[4,5])
+
+const newTree = new BinaryTree([3,3],[8,8])
