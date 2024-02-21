@@ -40,6 +40,7 @@ class Logic {
             if (indexOfArr[0] <= 8 && indexOfArr[1] <= 8 && indexOfArr[0] >= 1 && indexOfArr[1] >= 1) {
                 for (let k = 0; k < visitedCoordinates.length; k++) {
                     if (JSON.stringify(visitedCoordinates[k]) === JSON.stringify(indexOfArr)){
+
                     }
                     else {
                         console.log('Not visited before ' + indexOfArr)
@@ -77,4 +78,4 @@ class BinaryTree {
 // }
 // knightMoves([3,3],[4,5])
 
-const newTree = new BinaryTree([3,3],[8,8])
+const newTree = new BinaryTree([3,3],[5,3])

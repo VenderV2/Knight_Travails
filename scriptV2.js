@@ -4,6 +4,7 @@ const x2 = [2,-2]
 const x1 = [1,-1]
 const startingCoord = [3,3]
 let visitedCoordinates = [];
+let i = 0;
 
 class Node {
     constructor(coordinate) {
@@ -12,7 +13,7 @@ class Node {
     }
 }
 class Logic {
-    static getNextMove(currentCoordinate) {
+    static getMoveList(currentCoord) {
         function generateMoves() {
             let i = 0
             let listOfMoves = []
@@ -26,76 +27,73 @@ class Logic {
             });
             return listOfMoves;
         }
-        function translateCoordinates(currentCoord) {
-            console.log(currentCoord)
-            let newCoord = []
-            const listOfMoves = generateMoves()
-            listOfMoves.forEach(element => {
-                const translatedCoord = [currentCoord[0]+element[0], currentCoord[1]+element[1]]
-                newCoord.push(translatedCoord)
-            });
-            return newCoord;
-        }
-
-        function findNextValidMove(currentCoord) {
-            const newCoord = translateCoordinates(currentCoord)
-            for (let i = 0; i < newCoord.length; i++) {
-                const indexOfArr = newCoord[i]
-                if (indexOfArr[0] <= 8 && indexOfArr[1] <= 8) {
-                    console.log('true' + indexOfArr)
-                }
-                else console.log('false ' + indexOfArr)
+        let newCoord = []
+        const listOfMoves = generateMoves()
+        console.log(currentCoord)
+        listOfMoves.forEach(element => {
+            i++
+            console.log(i)
+            const translatedCoord = [currentCoord[0]+element[0], currentCoord[1]+element[1]]
+            newCoord.push(translatedCoord)
+        });
+        let allValidMoves = [];
+        for (let i = 0; i < newCoord.length; i++) {
+            const indexOfArr = newCoord[i]
+            if (indexOfArr[0] <= 8 && indexOfArr[1] <= 8 && indexOfArr[0] >= 1 && indexOfArr[1] >= 1) {
+                allValidMoves.push(indexOfArr)
             }
-            return;
         }
-        const nextMove = findNextValidMove(currentCoordinate)
-        console.log(nextMove)
-        return nextMove;
-
+        return allValidMoves;
     }
-    // static checkIfMoveIsValid(currentCoordinate) {
-    //     console.log('current coord is ' + currentCoordinate)
-    //     console.log()
-    //     if (visitedCoordinates.includes(currentCoordinate) == true) {
-    //         return false;
-    //     }
-    //     else if (currentCoordinate.includes('-') == true) {
-    //         return false;
-    //     }
-    //     else if (currentCoordinate[0] > 8 || currentCoordinate[1] > 8) {
-    //         return false;
-    //     }
-    //     else {
-    //         return true;
-    //     }
-    // }
 }
 
 class BinaryTree {
     constructor(startingCoordinate, destinationCoordinate) {
-        const startingNode = new Node(startingCoordinate)
-        this.root = startingNode;
-        this.buildTree(startingCoordinate, destinationCoordinate);
+        this.root = this.buildTree(startingCoordinate, destinationCoordinate);
+        this.destinatonFound = false;
     }
-    buildTree(currentCoordinate, destination, node) {
-    //First check if this move is valid, if not then return. If true then proceed to creating new node and checking for destination
+    buildTree(currentCoordinate, destination) {
+        if (JSON.stringify(visitedCoordinates).includes(JSON.stringify(currentCoordinate)) === true) {
+            return;
+        }
+        if (this.destinatonFound == true) {
+            return;
+        }
+        console.log('Not visited ' + currentCoordinate)
 
         const newNode = new Node(currentCoordinate)
-        visitedCoordinates.push(currentCoordinate)
-        const nextCoord = Logic.getNextMove(currentCoordinate)
+        visitedCoordinates.push(newNode.coordinate)
+        const validMoves = Logic.getMoveList(currentCoordinate)
+        console.log(currentCoordinate)
+        console.log('vm')
+        console.log(validMoves)
         //base case is when there are 0 valid moves that have been unvisited or destination is found
-
-        if (nextCoord == destination) {
+        
+        if (JSON.stringify(currentCoordinate) === JSON.stringify(destination)) {
             console.log('Destination found')
+            newNode.nextNode = new Node(validMoves)
+            this.destinatonFound = true;
             return newNode;
         }
         else {
-            this.buildTree(nextCoord, destination, newNode.nextNode)
+            for (let j = 0; j < validMoves.length; j++) {
+                newNode.nextNode = this.buildTree(validMoves[j], destination)
+            }
+            // newNode.move1 = this.buildTree(validMoves[0], destination)
+            // newNode.move2 = this.buildTree(validMoves[1], destination)
+            // newNode.move3 = this.buildTree(validMoves[2], destination)
+            // newNode.move4 = this.buildTree(validMoves[3], destination)
+            // newNode.move5 = this.buildTree(validMoves[4], destination)
+            // newNode.move6 = this.buildTree(validMoves[5], destination)
+            // newNode.move7 = this.buildTree(validMoves[6], destination)
+            // newNode.move8 = this.buildTree(validMoves[7], destination)
         }
     }
 }
 
-function knightMoves(startingCoordinate, destinationCoordinate) {
-    const newTree = new BinaryTree(startingCoordinate, destinationCoordinate)
-}
-knightMoves([3,3],[4,5])
+// function knightMoves(startingCoordinate, destinationCoordinate) {
+//     const newTree = new BinaryTree(startingCoordinate, destinationCoordinate)
+// }
+// knightMoves([3,3],[4,5])
+
+const newTree = new BinaryTree([3,3],[5,3])
