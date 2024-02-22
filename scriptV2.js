@@ -5,6 +5,7 @@ const x1 = [1,-1]
 const startingCoord = [3,3]
 let visitedCoordinates = [];
 let i = 0;
+let b = 0;
 
 class Node {
     constructor(coordinate) {
@@ -50,18 +51,18 @@ class Logic {
 class BinaryTree {
     constructor(startingCoordinate, destinationCoordinate) {
         this.root = this.buildTree(startingCoordinate, destinationCoordinate);
-        this.destinatonFound = false;
     }
     buildTree(currentCoordinate, destination) {
+        const newNode = new Node(currentCoordinate)
         if (JSON.stringify(visitedCoordinates).includes(JSON.stringify(currentCoordinate)) === true) {
-            return;
+            return newNode;
         }
         if (this.destinatonFound == true) {
-            return;
+            return newNode
         }
         console.log('Not visited ' + currentCoordinate)
 
-        const newNode = new Node(currentCoordinate)
+
         visitedCoordinates.push(newNode.coordinate)
         const validMoves = Logic.getMoveList(currentCoordinate)
         console.log(currentCoordinate)
@@ -73,17 +74,28 @@ class BinaryTree {
             console.log('Destination found')
             newNode.nextNode = new Node(validMoves)
             this.destinatonFound = true;
-            return newNode;
         }
         else {
             for (let j = 0; j < validMoves.length; j++) {
                 newNode.nextNode = this.buildTree(validMoves[j], destination)
             }
         }
+        b++
+        console.log(currentCoordinate)
+        return newNode;
+    }
+    Search(queriedCoordinate) {
+
     }
 }
 
-function knightMoves(startingCoordinate, destinationCoordinate) {
-    const newTree = new BinaryTree(startingCoordinate, destinationCoordinate)
-}
-knightMoves([3,3],[4,5])
+// function knightMoves(startingCoordinate, destinationCoordinate) {
+//     const newTree = new BinaryTree(startingCoordinate, destinationCoordinate)
+//     console.log(newTree)
+// }
+// knightMoves([3,3],[4,5])
+
+const newTree = new BinaryTree([3,3],[5,3])
+console.log(newTree)
+console.log(visitedCoordinates)
+console.log(b + ' moves')
