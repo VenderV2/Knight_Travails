@@ -6,6 +6,7 @@ const startingCoord = [3,3]
 let visitedCoordinates = [];
 let i = 0;
 let b = 0;
+let shortestPath = []
 
 class Node {
     constructor(coordinate) {
@@ -15,6 +16,9 @@ class Node {
 }
 class Logic {
     static getMoveList(currentCoord) {
+        if (currentCoord == undefined) {
+            return
+        }
         function generateMoves() {
             let i = 0
             let listOfMoves = []
@@ -32,8 +36,6 @@ class Logic {
         const listOfMoves = generateMoves()
         console.log(currentCoord)
         listOfMoves.forEach(element => {
-            i++
-            console.log(i)
             const translatedCoord = [currentCoord[0]+element[0], currentCoord[1]+element[1]]
             newCoord.push(translatedCoord)
         });
@@ -51,6 +53,7 @@ class Logic {
 class BinaryTree {
     constructor(startingCoordinate, destinationCoordinate) {
         this.root = this.buildTree(startingCoordinate, destinationCoordinate);
+        this.stepCount = this.Search(this.root, destinationCoordinate)
     }
     buildTree(currentCoordinate, destination) {
         const newNode = new Node(currentCoordinate)
@@ -58,7 +61,7 @@ class BinaryTree {
             return newNode;
         }
         if (this.destinatonFound == true) {
-            return newNode
+            return newNode;
         }
         console.log('Not visited ' + currentCoordinate)
 
@@ -72,23 +75,79 @@ class BinaryTree {
         
         if (JSON.stringify(currentCoordinate) === JSON.stringify(destination)) {
             console.log('Destination found')
-            newNode.nextNode = new Node(validMoves)
+            //newNode.destination = true;
             this.destinatonFound = true;
+            return newNode
         }
         else {
-            for (let j = 0; j < validMoves.length; j++) {
-                newNode.nextNode = this.buildTree(validMoves[j], destination)
-            }
+         if (validMoves == undefined) {
+            return
+         }
+            newNode.nextNode1 = this.buildTree(validMoves[0], destination)
+            newNode.nextNode2 = this.buildTree(validMoves[1], destination)
+            newNode.nextNode3 = this.buildTree(validMoves[2], destination)
+            newNode.nextNode4 = this.buildTree(validMoves[3], destination)
+            newNode.nextNode5 = this.buildTree(validMoves[4], destination)
+            newNode.nextNode6 = this.buildTree(validMoves[5], destination)
+            newNode.nextNode7 = this.buildTree(validMoves[6], destination)
+            newNode.nextNode8 = this.buildTree(validMoves[7], destination)
+        
         }
         b++
         console.log(currentCoordinate)
         return newNode;
     }
-    Search(queriedCoordinate) {
+    Search(node, queriedCoordinate) {
+       // console.log('Searching...')
+        console.log(node.nextNode1)
+        if ((stringify(node.nextNode1) == undefined ||stringify(node.nextNode2) == undefined ||stringify(node.nextNode3) == undefined ||stringify(node.nextNode4) == undefined ||stringify(node.nextNode5) == undefined ||stringify(node.nextNode6) == undefined ||stringify(node.nextNode7) == undefined ||stringify(node.nextNode8) == undefined || stringify(node) == undefined)) {
+            if (stringify(node.coordinate) == stringify(queriedCoordinate)) {
+                console.log('Search Complete 2')
+                return node
+            }
+            return null
+        }
+        
+        // const nextNode1 = this.Search(node.nextNode1, queriedCoordinate)
+        // if (nextNode1 !== null) {shortestPath.push(node.nextNode1); return nextNode1}
+        // const nextNode2 = this.Search(node.nextNode2, queriedCoordinate)
+        // if (nextNode2 !== null) {shortestPath.push(node.nextNode2);return nextNode2}
+        // const nextNode3 = this.Search(node.nextNode3, queriedCoordinate)
+        // if (nextNode3 !== null) {shortestPath.push(node.nextNode3);return nextNode3}
+        // const nextNode4 = this.Search(node.nextNode4, queriedCoordinate)
+        // if (nextNode4 !== null) {shortestPath.push(node.nextNode4);return nextNode4}
+        // const nextNode5 = this.Search(node.nextNode5, queriedCoordinate)
+        // if (nextNode5 !== null) {shortestPath.push(node.nextNode5);return nextNode5}
+        // const nextNode6 = this.Search(node.nextNode6, queriedCoordinate)
+        // if (nextNode6 !== null) {shortestPath.push(node.nextNode6);return nextNode6}
+        // const nextNode7 = this.Search(node.nextNode7, queriedCoordinate)
+        // if (nextNode7 !== null) {shortestPath.push(node.nextNode7);return nextNode7}
+        // const nextNode8 = this.Search(node.nextNode8, queriedCoordinate)
+        // if (nextNode8 !== null) {shortestPath.push(node.nextNode8);return nextNode8}
 
+        this.Search(node.nextNode1, queriedCoordinate)
+        
+        this.Search(node.nextNode2, queriedCoordinate)
+        
+        this.Search(node.nextNode3, queriedCoordinate)
+   
+        this.Search(node.nextNode4, queriedCoordinate)
+   
+        this.Search(node.nextNode5, queriedCoordinate)
+
+        this.Search(node.nextNode6, queriedCoordinate)
+
+        this.Search(node.nextNode7, queriedCoordinate)
+
+        this.Search(node.nextNode8, queriedCoordinate)
+    
     }
+    
 }
 
+function stringify(arrg) {
+    return JSON.stringify(arrg);
+}
 // function knightMoves(startingCoordinate, destinationCoordinate) {
 //     const newTree = new BinaryTree(startingCoordinate, destinationCoordinate)
 //     console.log(newTree)
@@ -99,3 +158,6 @@ const newTree = new BinaryTree([3,3],[5,3])
 console.log(newTree)
 console.log(visitedCoordinates)
 console.log(b + ' moves')
+console.log(newTree.stepCount)
+console.log(shortestPath)
+console.log(newTree.root.nextNode1.nextNode3 === newTree.stepCount)
